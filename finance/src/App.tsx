@@ -3,6 +3,7 @@ import { MetricCard } from './components/MetricCard';
 import { RevenueBreakdown } from './components/RevenueBreakdown';
 import { TicketBooking } from './components/TicketBooking';
 import { RunwayCard } from './components/RunwayCard';
+import { WalletCard } from './components/WalletCard';
 import { loadMetrics } from './lib/metrics';
 import { getSlots } from './lib/slots';
 import type { FinancialMetrics, ConsultancySlot } from './types/revenue';
@@ -131,6 +132,11 @@ function App() {
             color="amber"
             loading={loading && !metrics}
           />
+        </div>
+
+        {/* Wallet + Runway row */}
+        <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap', marginBottom: 24 }}>
+          <WalletCard />
         </div>
 
         {/* Revenue Breakdown + Runway */}
