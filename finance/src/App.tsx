@@ -1,9 +1,12 @@
 import { useEffect, useState, useCallback } from 'react';
+import { useWallet } from '@solana/wallet-adapter-react';
 import { MetricCard } from './components/MetricCard';
 import { RevenueBreakdown } from './components/RevenueBreakdown';
 import { TicketBooking } from './components/TicketBooking';
 import { RunwayCard } from './components/RunwayCard';
 import { WalletCard } from './components/WalletCard';
+import { PayoutForm } from './components/PayoutForm';
+import { TransactionLog } from './components/TransactionLog';
 import { loadMetrics } from './lib/metrics';
 import { getSlots } from './lib/slots';
 import type { FinancialMetrics, ConsultancySlot } from './types/revenue';
@@ -15,11 +18,13 @@ function fmt(n: number) {
 }
 
 function App() {
+  const { connected } = useWallet();
   const [metrics, setMetrics] = useState<FinancialMetrics | null>(null);
   const [slots, setSlots] = useState<ConsultancySlot[]>([]);
   const [loading, setLoading] = useState(true);
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [txRefresh, setTxRefresh] = useState(0);
 
   const refresh = useCallback(async () => {
     setLoading(true);
@@ -137,7 +142,17 @@ function App() {
         {/* Wallet + Runway row */}
         <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap', marginBottom: 24 }}>
           <WalletCard />
+          {connected && (
+            <PayoutForm onTransactionComplete={() => setTxRefresh(n => n + 1)} />
+          )}
         </div>
+
+        {/* Transaction Log */}
+        {connected && (
+          <div style={{ marginBottom: 24 }}>
+            <TransactionLog refreshTrigger={txRefresh} />
+          </div>
+        )}
 
         {/* Revenue Breakdown + Runway */}
         <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap', marginBottom: 24 }}>
