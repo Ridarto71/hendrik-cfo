@@ -2,12 +2,12 @@
 
 ## Sprint 1: Revenue Visibility Dashboard
 
-### Task 1.1: Financial Dashboard MVP + Revenue Tracking
+### Task 1.1: Financial Dashboard MVP + Revenue Tracking + Ticket Booking
 
 **Status:** 🔴 Not Started
 
 **Brief:**
-Build a dashboard that shows Hendrik's money: daily revenue by source, monthly forecast, client count, runway.
+Build a dashboard that shows Hendrik's money: daily revenue by source, monthly forecast, client count, runway. Also integrate ticket booking for consultancy clients.
 
 **Requirements:**
 - React + Vite dashboard (similar structure to CTO's energy dashboard)
